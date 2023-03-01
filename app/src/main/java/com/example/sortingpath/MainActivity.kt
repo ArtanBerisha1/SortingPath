@@ -1,6 +1,7 @@
 package com.example.sortingpath
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -38,6 +40,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+    val TAG = "MainActivity"
 
     val lastTouchX = remember {
         mutableStateOf(0f)
@@ -51,21 +54,20 @@ fun DefaultPreview() {
         mutableStateOf<Path?>(Path())
     }
 
-
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(2.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Surface(
             modifier = Modifier
                 .weight(0.9f),
-            color = Color.Gray
+            color = Color.LightGray,
         ) {
             Canvas(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxHeight()
                     .pointerInteropFilter { motionEvent ->
                         when (motionEvent.action) {
                             MotionEvent.ACTION_DOWN -> {
@@ -80,6 +82,7 @@ fun DefaultPreview() {
                                 for (i in 0 until historySize) {
                                     val historicalX = motionEvent.getHistoricalX(i)
                                     val historicalY = motionEvent.getHistoricalY(i)
+                                    Log.d(TAG, "DefaultPreview: x: $historicalX, y: $historicalY")
 
                                     path.value?.lineTo(historicalX, historicalY)
                                 }
@@ -99,6 +102,25 @@ fun DefaultPreview() {
                         true
                     },
                 onDraw = {
+                    val canvasSize = this.size
+
+                    Log.d(TAG, "DefaultPreview: size: ${this.size}")
+                    for (x in 0 .. canvasSize.width.toInt() step 25) {
+                        drawLine(
+                            color = Color.Gray,
+                            start = Offset(x.toFloat(), 0f),
+                            end = Offset(x.toFloat(), canvasSize.height),
+                            strokeWidth = 1.dp.toPx()
+                        )
+                    }
+                    for (y in 0 .. canvasSize.height.toInt() step 25) {
+                        drawLine(
+                            color = Color.Gray,
+                            start = Offset(0f, y.toFloat()),
+                            end = Offset(canvasSize.width, y.toFloat()),
+                            strokeWidth = 1.dp.toPx()
+                        )
+                    }
                     path.value?.let {
                         drawPath(
                             path = it,
@@ -108,19 +130,36 @@ fun DefaultPreview() {
                             )
                         )
                     }
-
                 }
             )
         }
-
-        Button(
-            onClick = {
-                path.value = null
-                path.value = Path()
-            }
+        Column(
+            modifier = Modifier
+                .align(Alignment.Top)
+                .fillMaxHeight()
         ) {
-            Text(text = "Clear")
+            Button(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .width(90.dp),
+                onClick = {
+                    path.value = null
+                    path.value = Path()
+                }
+            ) {
+                Text(text = "Clear")
+            }
+
+            Button(
+                modifier = Modifier
+                    .padding(2.dp),
+                onClick = {}
+            ) {
+                Text(text = "Process")
+            }
         }
+
+
     }
 
 
