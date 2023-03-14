@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.sortingpath.sort_algorithms.BubbleSort
 import com.example.sortingpath.ui.theme.SortingPathTheme
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +63,12 @@ fun DefaultPreview() {
     var drawRects by remember {
         mutableStateOf(false)
     }
+
+    var drawSort by remember {
+        mutableStateOf(false)
+    }
+
+    val bubbleSort = BubbleSort()
 
     Row(
         modifier = Modifier
@@ -139,11 +146,20 @@ fun DefaultPreview() {
                     }
 
                     if (drawRects) {
-                        var startRange = 0f
-                        var endRange = 0f
                         for (i in 0 until  listOfPoints.value.size) {
                             drawLine(
                                 color = Color.Blue,
+                                start = Offset(listOfPoints.value[i].x, listOfPoints.value[i].y),
+                                end = Offset(listOfPoints.value[i].x, canvasSize.height),
+                                strokeWidth = 1.dp.toPx()
+                            )
+                        }
+                    }
+
+                    if (drawSort) {
+                        for (i in 0 until  listOfPoints.value.size) {
+                            drawLine(
+                                color = Color.Red,
                                 start = Offset(listOfPoints.value[i].x, listOfPoints.value[i].y),
                                 end = Offset(listOfPoints.value[i].x, canvasSize.height),
                                 strokeWidth = 1.dp.toPx()
@@ -157,15 +173,18 @@ fun DefaultPreview() {
             modifier = Modifier
                 .align(Alignment.Top)
                 .fillMaxHeight()
+                .width(100.dp)
         ) {
             Button(
                 modifier = Modifier
                     .padding(2.dp)
-                    .width(90.dp),
+                    .fillMaxWidth(),
                 onClick = {
                     path.value = null
                     path.value = Path()
                     listOfPoints.value = arrayListOf()
+                    drawRects = false
+                    drawSort = false
                 }
             ) {
                 Text(text = "Clear")
@@ -173,7 +192,8 @@ fun DefaultPreview() {
 
             Button(
                 modifier = Modifier
-                    .padding(2.dp),
+                    .padding(2.dp)
+                    .fillMaxWidth(),
                 onClick = {
                     drawRects = !drawRects
 
@@ -187,7 +207,7 @@ fun DefaultPreview() {
                     val pointCoordinates = FloatArray(2)
 
                     // Loop through the path and get the coordinates of each point
-                    for (distance in 0L..pathLength.toLong() step 20L) {
+                    for (distance in 0L..pathLength.toLong() step 30L) {
                         // Get the coordinates of the point at the current distance
                         pathMeasure.getPosTan(distance.toFloat(), pointCoordinates, null)
 
@@ -196,10 +216,29 @@ fun DefaultPreview() {
 
                         listOfPoints.value.add(PointF(pointCoordinates[0], pointCoordinates[1]))
                     }
-
+                    Log.d(TAG, "DefaultPreview: ${listOfPoints.value}")
                 }
             ) {
                 Text(text = "Process")
+            }
+
+            Button(
+                modifier = Modifier
+                    .padding(2.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
+                    bubbleSort.sort(listOfPoints.value)
+                    val tempList = listOfPoints.value
+                    listOfPoints.value = arrayListOf()
+                    listOfPoints.value = tempList
+                    path.value = null
+                    path.value = Path()
+                    Log.d(TAG, "DefaultPreview After: ${listOfPoints.value}")
+                    drawSort = !drawSort
+                }
+            ) {
+                Text(text = "Sort")
             }
         }
     }
