@@ -207,14 +207,18 @@ fun DefaultPreview() {
                     val pointCoordinates = FloatArray(2)
 
                     // Loop through the path and get the coordinates of each point
-                    for (distance in 0L..pathLength.toLong() step 30L) {
+                    for (distance in 0L..pathLength.toLong() step 2L) {
                         // Get the coordinates of the point at the current distance
                         pathMeasure.getPosTan(distance.toFloat(), pointCoordinates, null)
 
                         // Log the coordinates of the point
                         Log.d("Point Coordinates", "X: ${pointCoordinates[0]} Y: ${pointCoordinates[1]}")
 
-                        listOfPoints.value.add(PointF(pointCoordinates[0], pointCoordinates[1]))
+                        if (listOfPoints.value.isEmpty()) {
+                            listOfPoints.value.add(PointF(pointCoordinates[0], pointCoordinates[1]))
+                        } else if (listOfPoints.value.last().x + 20 < pointCoordinates[0]) {
+                            listOfPoints.value.add(PointF(pointCoordinates[0], pointCoordinates[1]))
+                        }
                     }
                     Log.d(TAG, "DefaultPreview: ${listOfPoints.value}")
                 }
