@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asAndroidPath
@@ -147,22 +148,24 @@ fun DefaultPreview() {
 
                     if (drawRects) {
                         for (i in 0 until  listOfPoints.value.size) {
-                            drawLine(
+                            drawRect(
                                 color = Color.Blue,
-                                start = Offset(listOfPoints.value[i].x, listOfPoints.value[i].y),
-                                end = Offset(listOfPoints.value[i].x, canvasSize.height),
-                                strokeWidth = 1.dp.toPx()
+                                topLeft = Offset(x = listOfPoints.value[i].x, y = listOfPoints.value[i].y),
+                                size = Size(20f, canvasSize.height - listOfPoints.value[i].y),
+                                style = Stroke()
                             )
                         }
+                        path.value = null
+                        path.value = Path()
                     }
 
                     if (drawSort) {
                         for (i in 0 until  listOfPoints.value.size) {
-                            drawLine(
+                            drawRect(
                                 color = Color.Red,
-                                start = Offset(listOfPoints.value[i].x, listOfPoints.value[i].y),
-                                end = Offset(listOfPoints.value[i].x, canvasSize.height),
-                                strokeWidth = 1.dp.toPx()
+                                topLeft = Offset(x = listOfPoints.value[i].x, y = listOfPoints.value[i].y),
+                                size = Size(20f, canvasSize.height - listOfPoints.value[i].y),
+                                style = Stroke()
                             )
                         }
                     }
