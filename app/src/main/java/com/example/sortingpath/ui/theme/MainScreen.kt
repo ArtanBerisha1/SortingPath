@@ -139,7 +139,6 @@ fun MainScreen() {
                                 color = Color.Blue,
                                 topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
                                 size = Size(20f, canvasSize.height - listOfPoints.value[i].pointF.y),
-//                                style = Stroke()
                                 style = if (listOfPoints.value[i].isSelected) {
                                     Fill
                                 } else {
@@ -154,7 +153,7 @@ fun MainScreen() {
                     if (drawSort) {
                         for (i in 0 until  listOfPoints.value.size) {
                             drawRect(
-                                color = Color.Red,
+                                color = Color.Blue,
                                 topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
                                 size = Size(20f, canvasSize.height - listOfPoints.value[i].pointF.y),
                                 style = Stroke()
