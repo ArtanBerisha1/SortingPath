@@ -1,8 +1,9 @@
 package com.example.sortingpath
 
-import android.graphics.RectF
+import android.graphics.PointF
 
-data class CustomRect(
+data class CustomPointF(
     var id: Int,
-    var rect: RectF
+    var pointF: PointF,
+    var isSelected: Boolean = false
 )
