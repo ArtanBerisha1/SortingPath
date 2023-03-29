@@ -32,6 +32,8 @@ import com.example.sortingpath.sort_algorithms.BubbleSort
 fun MainScreen() {
     val TAG = "MainActivity"
 
+    val rectWidth = 20f
+
     val lastTouchX = remember {
         mutableStateOf(0f)
     }
@@ -49,10 +51,6 @@ fun MainScreen() {
     }
 
     var drawRects by remember {
-        mutableStateOf(false)
-    }
-
-    var drawSort by remember {
         mutableStateOf(false)
     }
 
@@ -136,29 +134,26 @@ fun MainScreen() {
                     if (drawRects) {
                         for (i in 0 until  listOfPoints.value.size) {
                             drawRect(
-                                color = Color.Blue,
-                                topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
-                                size = Size(20f, canvasSize.height - listOfPoints.value[i].pointF.y),
-                                style = if (listOfPoints.value[i].isSelected) {
-                                    Fill
+                                color = if (listOfPoints.value[i].isMainIndex) {
+                                    Color.Green
+                                } else if (listOfPoints.value[i].isSecondIndex) {
+                                    Color.Blue
                                 } else {
-                                    Stroke()
-                                }
+                                    Color.White
+                                },
+                                topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
+                                size = Size(rectWidth, canvasSize.height - listOfPoints.value[i].pointF.y),
+                                style = Fill
+                            )
+                            drawRect(
+                                color = Color.Black,
+                                topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
+                                size = Size(rectWidth, canvasSize.height - listOfPoints.value[i].pointF.y),
+                                style = Stroke()
                             )
                         }
                         path.value = null
                         path.value = Path()
-                    }
-
-                    if (drawSort) {
-                        for (i in 0 until  listOfPoints.value.size) {
-                            drawRect(
-                                color = Color.Blue,
-                                topLeft = Offset(x = listOfPoints.value[i].pointF.x, y = listOfPoints.value[i].pointF.y),
-                                size = Size(20f, canvasSize.height - listOfPoints.value[i].pointF.y),
-                                style = Stroke()
-                            )
-                        }
                     }
                 }
             )
@@ -178,7 +173,6 @@ fun MainScreen() {
                     path.value = Path()
                     listOfPoints.value = arrayListOf()
                     drawRects = false
-                    drawSort = false
                 }
             ) {
                 Text(text = "Clear")
@@ -203,7 +197,7 @@ fun MainScreen() {
                     var id = 0
 
                     // Loop through the path and get the coordinates of each point
-                    for (distance in 0L..pathLength.toLong() step 2L) {
+                    for (distance in 0L..pathLength.toLong()) {
                         // Get the coordinates of the point at the current distance
                         pathMeasure.getPosTan(distance.toFloat(), pointCoordinates, null)
 
@@ -213,7 +207,7 @@ fun MainScreen() {
                         if (listOfPoints.value.isEmpty()) {
                             listOfPoints.value.add(CustomPointF(pointF = PointF(pointCoordinates[0], pointCoordinates[1]), id = id))
                             id++
-                        } else if (listOfPoints.value.last().pointF.x + 20 < pointCoordinates[0]) {
+                        } else if (listOfPoints.value.last().pointF.x + rectWidth < pointCoordinates[0]) {
                             listOfPoints.value.add(CustomPointF(pointF = PointF(pointCoordinates[0], pointCoordinates[1]), id = id))
                             id++
                         }
@@ -234,7 +228,6 @@ fun MainScreen() {
                     path.value = null
                     path.value = Path()
                     Log.d(TAG, "DefaultPreview After: ${listOfPoints.value}")
-                    drawSort = !drawSort
                 }
             ) {
                 Text(text = "Sort")
