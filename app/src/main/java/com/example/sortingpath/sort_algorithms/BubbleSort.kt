@@ -24,7 +24,7 @@ class BubbleSort {
                         arrayList[j].pointF.y = arrayList[j + 1].pointF.y
                         arrayList[j + 1].pointF.y = temp
                     }
-                    delay(3)
+                    delay(10)
                 }
             }
             arrayList.forEach {
