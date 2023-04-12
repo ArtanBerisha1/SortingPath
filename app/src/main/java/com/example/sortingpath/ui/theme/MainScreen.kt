@@ -82,9 +82,7 @@ fun MainScreen() {
                         for (i in 0 until  mainViewModel.listOfPoints.value.size) {
                             drawRect(
                                 color = if (mainViewModel.listOfPoints.value[i].isMainIndex) {
-                                    mainViewModel.playSound(
-                                        mainViewModel.listOfPoints.value[i].pointF.y.div(canvasSize.height)
-                                    )
+                                    mainViewModel.playSound(i)
                                     Color.Green
                                 } else if (mainViewModel.listOfPoints.value[i].isSecondIndex) {
                                     Color.Blue

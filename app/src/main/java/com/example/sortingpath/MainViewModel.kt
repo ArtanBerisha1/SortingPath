@@ -13,7 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.BubbleSort
+import kotlinx.coroutines.launch
 
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
@@ -32,7 +34,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val bubbleSort = BubbleSort()
 
     private var soundPool: SoundPool? = null
-    private var soundId: Int = 0
+    private var firstSound: Int = 0
+
+    private var counter: Int? = null
     private var soundPoolLoaded = false
 
     init {
@@ -45,7 +49,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             )
             .build()
         soundPool = SoundPool.Builder()
-            .setMaxStreams(10)
+            .setMaxStreams(1)
             .setAudioAttributes(audioAttributes)
             .build()
         soundPool?.setOnLoadCompleteListener { _, _, status ->
@@ -55,7 +59,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 Log.e(TAG, "SoundPool not loaded: ")
             }
         }
-        soundId = soundPool?.load(application, R.raw.acuteguitar, 1) ?: -1
+        firstSound = soundPool?.load(application, R.raw.bell, 1) ?: -1
     }
 
 
@@ -78,8 +82,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             // Get the coordinates of the point at the current distance
             pathMeasure.getPosTan(distance.toFloat(), pointCoordinates, null)
 
-            // Log the coordinates of the point
-            Log.d("Point Coordinates", "X: ${pointCoordinates[0]} Y: ${pointCoordinates[1]}")
+            // Log the coordinates of the point, to be removed, for testing only
+//            Log.d("Point Coordinates", "X: ${pointCoordinates[0]} Y: ${pointCoordinates[1]}")
 
             if (listOfPoints.value.isEmpty()) {
                 listOfPoints.value.add(CustomPointF(pointF = PointF(pointCoordinates[0], pointCoordinates[1]), id = id))
@@ -138,8 +142,22 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         drawRectangles = false
     }
 
-    fun playSound(volume: Float) {
-//        if (soundPoolLoaded) soundPool?.play(soundId, volume, volume, 0, 0, 2f)
+    fun playSound(currentCounter: Int) {
+        viewModelScope.launch {
+            if (counter == null) {
+                counter = currentCounter
+                if (soundPoolLoaded) {
+                    soundPool?.play(firstSound, 1f, 1f, 0, 0, 1f)
+                }
+            } else {
+                if (currentCounter != counter) {
+                    counter = currentCounter
+                    if (soundPoolLoaded) {
+                        soundPool?.play(firstSound, 1f, 1f, 0, 0, 1f)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCleared() {
