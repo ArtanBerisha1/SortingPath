@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.BubbleSort
+import com.example.sortingpath.sort_algorithms.SelectionSort
 import kotlinx.coroutines.launch
 
 
@@ -32,6 +33,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     var drawRectangles by mutableStateOf(false)
 
     private val bubbleSort = BubbleSort()
+    private val selectionSort = SelectionSort()
 
     private var soundPool: SoundPool? = null
     private var firstSound: Int = 0
@@ -129,7 +131,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun sortRect() {
         Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
-        bubbleSort.sort(listOfPoints.value)
+//        bubbleSort.sort(listOfPoints.value)
+        selectionSort.sort(listOfPoints.value)
         path.value = null
         path.value = Path()
         Log.d(TAG, "DefaultPreview After: ${listOfPoints.value}")
