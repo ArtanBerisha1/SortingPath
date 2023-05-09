@@ -3,9 +3,7 @@ package com.example.sortingpath.ui.theme
 import android.app.Application
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -14,6 +12,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInteropFilter
@@ -116,6 +115,8 @@ fun MainScreen() {
                 modifier = Modifier
                     .padding(2.dp)
                     .fillMaxWidth(),
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
                     mainViewModel.clearDrawings()
                 }
@@ -127,6 +128,8 @@ fun MainScreen() {
                 modifier = Modifier
                     .padding(2.dp)
                     .fillMaxWidth(),
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
                     mainViewModel.createRectanglesUnderPath()
                 }
@@ -138,6 +141,8 @@ fun MainScreen() {
                 modifier = Modifier
                     .padding(2.dp)
                     .fillMaxWidth(),
+                shape = RectangleShape,
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
                     mainViewModel.sortRect()
                 }
