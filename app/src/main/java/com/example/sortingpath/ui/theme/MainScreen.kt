@@ -39,7 +39,8 @@ fun MainScreen() {
     ) {
         Surface(
             modifier = Modifier
-                .weight(0.9f),
+                .weight(1f)
+                .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
             color = Color.LightGray,
         ) {
             Canvas(
