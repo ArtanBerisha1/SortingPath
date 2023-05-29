@@ -1,6 +1,8 @@
 package com.example.sortingpath.ui.theme
 
+import CustomDropdownMenu
 import android.app.Application
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -145,11 +147,28 @@ fun MainScreen() {
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
-                    mainViewModel.sortRect()
+                    if (mainViewModel.canWeSort()) {
+                        mainViewModel.sortRect()
+                    } else {
+                        Toast.makeText(context, "Choose Sorting Algorithm", Toast.LENGTH_SHORT).show()
+                    }
                 }
             ) {
                 Text(text = "Sort")
             }
+
+            CustomDropdownMenu(
+                list = mainViewModel.algorithmList,
+                defaultSelected = "Choose",
+                onSelected = {
+                    mainViewModel.updateCurrentAlgorithm(it)
+                    Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+                },
+                color = Color.Black,
+                modifier = Modifier
+                    .padding(2.dp)
+                    .fillMaxWidth()
+            )
         }
     }
 }

@@ -47,6 +47,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private var counter: Int? = null
     private var soundPoolLoaded = false
 
+    val algorithmList = arrayListOf("Bubble Sort", "Insertion Sort", "Selection Sort", "Heap Sort", "Merge Sort")
+    private var currentAlgorithm: String? = null
+
     init {
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(
@@ -137,9 +140,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun sortRect() {
         Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
-//            mergeSortV1.mergeSort(listOfPoints.value)
-//        mergeSortV2.mergeSort(listOfPoints.value)
-        insertionSort.sort(listOfPoints.value)
+        when (currentAlgorithm) {
+            "Bubble Sort" -> bubbleSort.sort(listOfPoints.value)
+            "Insertion Sort" -> insertionSort.sort(listOfPoints.value)
+            "Selection Sort" -> selectionSort.sort(listOfPoints.value)
+            else -> {}
+        }
         path.value = null
         path.value = Path()
         Log.d(TAG, "DefaultPreview After: ${listOfPoints.value}")
@@ -169,6 +175,18 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             }
         }
     }
+
+    fun updateCurrentAlgorithm(id: Int) {
+        when(id) {
+            0 -> currentAlgorithm = "Bubble Sort"
+            1 -> currentAlgorithm = "Insertion Sort"
+            2 -> currentAlgorithm = "Selection Sort"
+            3 -> currentAlgorithm = "Heap Sort"
+            4 -> currentAlgorithm = "Merge Sort"
+        }
+    }
+
+    fun canWeSort() = currentAlgorithm != null
 
     override fun onCleared() {
         super.onCleared()
