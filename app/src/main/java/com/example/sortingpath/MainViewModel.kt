@@ -15,9 +15,9 @@ import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.*
-import com.example.sortingpath.sort_algorithms.merge_sort.MergeSort
 import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortCustomV2
-import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortV1
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -34,12 +34,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     var drawRectangles by mutableStateOf(false)
 
-    private val bubbleSort = BubbleSort()
-    private val selectionSort = SelectionSort()
-    private val insertionSort = InsertionSort()
-    private val mergeSort = MergeSort()
-    private val mergeSortV1 = MergeSortV1()
-    private val mergeSortV2 = MergeSortCustomV2()
+    private val bubbleSort = BubbleSort() // Done
+    private val selectionSort = SelectionSort() // Done
+    private val insertionSort = InsertionSort() // Done
+    private val mergeSortV2 = MergeSortCustomV2() // Almost Done
+    private val heapSort = HeapSort() // TODO
+
 
     private var soundPool: SoundPool? = null
     private var firstSound: Int = 0
@@ -144,11 +144,25 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             "Bubble Sort" -> bubbleSort.sort(listOfPoints.value)
             "Insertion Sort" -> insertionSort.sort(listOfPoints.value)
             "Selection Sort" -> selectionSort.sort(listOfPoints.value)
+            "Merge Sort" -> {
+                CoroutineScope(Dispatchers.Main).launch {
+                    do {
+                        mergeSortV2.mergeSort(listOfPoints.value)
+                    } while (!isArraySorted(listOfPoints.value))
+                }
+            }
             else -> {}
         }
         path.value = null
         path.value = Path()
         Log.d(TAG, "DefaultPreview After: ${listOfPoints.value}")
+    }
+
+    private fun isArraySorted(arrayList: ArrayList<CustomPointF>): Boolean {
+        for (i in 0 until arrayList.size - 1) {
+            if (arrayList[i].pointF.y < arrayList[i + 1].pointF.y) return false
+        }
+        return true
     }
 
     fun clearDrawings() {
