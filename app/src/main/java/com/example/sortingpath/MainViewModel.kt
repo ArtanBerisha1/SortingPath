@@ -13,6 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.*
 import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortCustomV2
@@ -48,7 +50,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private var soundPoolLoaded = false
 
     val algorithmList = arrayListOf("Bubble Sort", "Insertion Sort", "Selection Sort", "Heap Sort", "Merge Sort")
-    private var currentAlgorithm: String? = null
+    private var _currentAlgorithm = MutableLiveData<String>()
+    val currentAlgorithm: LiveData<String>
+        get() = _currentAlgorithm
+
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -140,7 +145,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun sortRect() {
         Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
-        when (currentAlgorithm) {
+        when (_currentAlgorithm.value) {
             "Bubble Sort" -> bubbleSort.sort(listOfPoints.value)
             "Insertion Sort" -> insertionSort.sort(listOfPoints.value)
             "Selection Sort" -> selectionSort.sort(listOfPoints.value)
@@ -192,11 +197,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun updateCurrentAlgorithm(id: Int) {
         when(id) {
-            0 -> currentAlgorithm = "Bubble Sort"
-            1 -> currentAlgorithm = "Insertion Sort"
-            2 -> currentAlgorithm = "Selection Sort"
-            3 -> currentAlgorithm = "Heap Sort"
-            4 -> currentAlgorithm = "Merge Sort"
+            0 -> _currentAlgorithm.value = "Bubble Sort"
+            1 -> _currentAlgorithm.value = "Insertion Sort"
+            2 -> _currentAlgorithm.value = "Selection Sort"
+            3 -> _currentAlgorithm.value = "Heap Sort"
+            4 -> _currentAlgorithm.value = "Merge Sort"
         }
     }
 

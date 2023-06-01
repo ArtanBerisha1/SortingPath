@@ -4,6 +4,7 @@ import com.example.sortingpath.CustomPointF
 import kotlinx.coroutines.delay
 
 class MergeSortCustomV2 {
+    private val delay: Long = 8
 
     suspend fun mergeSort(list: ArrayList<CustomPointF>) {
         if (list.size <= 1) {
@@ -40,7 +41,7 @@ class MergeSortCustomV2 {
                 list[startIndex + i].pointF.y = right[j].pointF.y
                 right[j].pointF.y = tmp
                 i++
-                delay(10)
+                delay(delay)
 
                 // Shift elements in the right list to maintain sorted order
                 for (k in j + 1 until right.size) {
@@ -48,7 +49,7 @@ class MergeSortCustomV2 {
                         val tmp2 = right[k].pointF.y
                         right[k].pointF.y = right[k - 1].pointF.y
                         right[k - 1].pointF.y = tmp2
-                        delay(10)
+                        delay(delay)
                     } else {
                         break
                     }
@@ -68,7 +69,7 @@ class MergeSortCustomV2 {
                     val tmp = left[k].pointF.y
                     left[k].pointF.y = left[k - 1].pointF.y
                     left[k - 1].pointF.y = tmp
-                    delay(10)
+                    delay(delay)
                 } else {
                     break
                 }

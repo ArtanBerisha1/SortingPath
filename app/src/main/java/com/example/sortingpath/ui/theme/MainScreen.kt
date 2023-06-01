@@ -159,7 +159,6 @@ fun MainScreen() {
 
             CustomDropdownMenu(
                 list = mainViewModel.algorithmList,
-                defaultSelected = "Choose",
                 onSelected = {
                     mainViewModel.updateCurrentAlgorithm(it)
                     Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()

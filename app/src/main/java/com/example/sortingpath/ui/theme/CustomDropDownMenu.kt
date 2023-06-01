@@ -21,7 +21,6 @@ import androidx.compose.ui.window.PopupProperties
 @Composable
 fun CustomDropdownMenu(
     list: List<String>, // Menu Options
-    defaultSelected: String, // Default Selected Option on load
     color: Color,
     modifier: Modifier,
     onSelected: (Int) -> Unit, // Pass the Selected Option
@@ -29,6 +28,9 @@ fun CustomDropdownMenu(
     var selectedIndex by remember { mutableStateOf(0) }
     var expand by remember { mutableStateOf(false) }
     var stroke by remember { mutableStateOf(1) }
+
+    val (selectedItem1, setSelectedItem1) = remember { mutableStateOf("Choose") }
+
     Box(
         modifier
             .background(Color.LightGray)
@@ -39,7 +41,7 @@ fun CustomDropdownMenu(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = defaultSelected,
+            text = selectedItem1,
             color = color,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
@@ -65,6 +67,7 @@ fun CustomDropdownMenu(
                 DropdownMenuItem(
                     onClick = {
                         selectedIndex = index
+                        setSelectedItem1(item)
                         expand = false
                         stroke = if (expand) 2 else 1
                         onSelected(selectedIndex)
