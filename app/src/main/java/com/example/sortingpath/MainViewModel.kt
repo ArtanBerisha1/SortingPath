@@ -39,8 +39,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val bubbleSort = BubbleSort() // Done
     private val selectionSort = SelectionSort() // Done
     private val insertionSort = InsertionSort() // Done
-    private val mergeSortV2 = MergeSortCustomV2() // Almost Done
-    private val heapSort = HeapSort() // TODO
+    private val mergeSortV2 = MergeSortCustomV2() // Done
+    private val heapSort = HeapSortV1() // Progress
 
 
     private var soundPool: SoundPool? = null
@@ -50,9 +50,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private var soundPoolLoaded = false
 
     val algorithmList = arrayListOf("Bubble Sort", "Insertion Sort", "Selection Sort", "Heap Sort", "Merge Sort")
-    private var _currentAlgorithm = MutableLiveData<String>()
-    val currentAlgorithm: LiveData<String>
-        get() = _currentAlgorithm
+    private var currentAlgorithm: String? = null
 
 
     init {
@@ -145,16 +143,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun sortRect() {
         Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
-        when (_currentAlgorithm.value) {
+        when (currentAlgorithm) {
             "Bubble Sort" -> bubbleSort.sort(listOfPoints.value)
             "Insertion Sort" -> insertionSort.sort(listOfPoints.value)
             "Selection Sort" -> selectionSort.sort(listOfPoints.value)
-            "Merge Sort" -> {
-                CoroutineScope(Dispatchers.Main).launch {
-                    do {
-                        mergeSortV2.mergeSort(listOfPoints.value)
-                    } while (!isArraySorted(listOfPoints.value))
-                }
+            "Merge Sort" -> CoroutineScope(Dispatchers.Default).launch {
+                do {
+                    mergeSortV2.mergeSort(listOfPoints.value)
+                } while (!isArraySorted(listOfPoints.value))
+            }
+            "Heap Sort" -> CoroutineScope(Dispatchers.Default).launch {
+                if (!isArraySorted(listOfPoints.value)) heapSort.sort(listOfPoints.value)
             }
             else -> {}
         }
@@ -197,11 +196,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun updateCurrentAlgorithm(id: Int) {
         when(id) {
-            0 -> _currentAlgorithm.value = "Bubble Sort"
-            1 -> _currentAlgorithm.value = "Insertion Sort"
-            2 -> _currentAlgorithm.value = "Selection Sort"
-            3 -> _currentAlgorithm.value = "Heap Sort"
-            4 -> _currentAlgorithm.value = "Merge Sort"
+            0 -> currentAlgorithm = "Bubble Sort"
+            1 -> currentAlgorithm = "Insertion Sort"
+            2 -> currentAlgorithm = "Selection Sort"
+            3 -> currentAlgorithm = "Heap Sort"
+            4 -> currentAlgorithm = "Merge Sort"
         }
     }
 
