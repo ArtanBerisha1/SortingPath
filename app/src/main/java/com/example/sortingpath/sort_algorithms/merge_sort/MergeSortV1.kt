@@ -5,6 +5,8 @@ class MergeSortV1 {
 
     var helpingArray: ArrayList<Float> = arrayListOf()
 
+    var mainIndex = 0
+
     // working version
     fun mergeSort(list: ArrayList<Float>) {
         println("CURRENT STATE: $helpingArray")
@@ -43,35 +45,35 @@ class MergeSortV1 {
         var i = 0
         var j = 0
 
+        mainIndex = 0
+
         while (i < left.size && j < right.size) {
             if (left[i] <= right[j]) {
                 list[i + j] = left[i]
-                swapPlaces(i + j, i)
+                helpingArray[mainIndex] = left[i]
+                mainIndex++
                 i++
             } else {
                 list[i + j] = right[j]
-                swapPlaces(i + j, j)
+                helpingArray[mainIndex] = right[j]
+                mainIndex++
                 j++
             }
         }
 
         while (i < left.size) {
             list[i + j] = left[i]
-            swapPlaces(i + j, i)
+            helpingArray[mainIndex] = left[i]
+            mainIndex++
             i++
         }
 
         while (j < right.size) {
             list[i + j] = right[j]
-            swapPlaces(i + j, j)
+            helpingArray[mainIndex] = right[j]
+            mainIndex++
             j++
         }
-    }
-
-    private fun swapPlaces(first: Int, second: Int) {
-        val firstVal = helpingArray[first]
-        helpingArray[first] = helpingArray[second]
-        helpingArray[second] = firstVal
     }
 }
 
