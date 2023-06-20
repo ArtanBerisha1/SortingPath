@@ -1,9 +1,13 @@
 package com.example.sortingpath.sort_algorithms.merge_sort
 
+import android.util.Log
+import com.example.sortingpath.CustomPointF
+
 
 class MergeSortV1 {
 
     var helpingArray: ArrayList<Float> = arrayListOf()
+    var helpingArrayCustomPointF: ArrayList<CustomPointF> = arrayListOf()
 
     var mainIndex = 0
 
@@ -24,7 +28,7 @@ class MergeSortV1 {
                 }
             } else if (middle > 1) {
                 for (i in 0 until list.size) {
-                    if (i <= middle) {
+                    if (i < middle) {
                         left.add(list[i])
                     } else {
                         right.add(list[i])
@@ -75,17 +79,58 @@ class MergeSortV1 {
             j++
         }
     }
-}
+    //-------------------------
 
-fun main() {
-    val firstArray = arrayListOf(38f, 27f, 43f, 3f, 9f, 82f, 10f)
-    val firstArray1 = arrayListOf(38f, 27f, 43f, 3f, 9f, 82f, 10f)
+    suspend fun mergeSortCustomPointF(list: ArrayList<CustomPointF>) {
+        Log.d("artan11", "mergeSortCustomPointF: original: $helpingArrayCustomPointF")
+        if (list.size > 1) {
+            val middle = list.size / 2
+            val left = arrayListOf<CustomPointF>()
+            val right = arrayListOf<CustomPointF>()
 
-    println(firstArray)
+            for (i in 0 until middle) {
+                left.add(list[i])
+            }
+            for (i in middle until list.size) {
+                right.add(list[i])
+            }
+            mergeSortCustomPointF(left)
+            mergeSortCustomPointF(right)
 
-    val mergeSortV1 = MergeSortV1()
-    mergeSortV1.helpingArray = firstArray1
-    mergeSortV1.mergeSort(firstArray)
-    println("FINISH, firstArray: $firstArray")
-    println("FINISH, helpingArray: ${mergeSortV1.helpingArray}")
+            mergeCustomPointF(list, left, right)
+        }
+    }
+
+    private fun mergeCustomPointF(list: ArrayList<CustomPointF>, left: ArrayList<CustomPointF>, right: ArrayList<CustomPointF>) {
+        var i = 0
+        var j = 0
+        var k = 0
+
+        while (i < left.size && j < right.size) {
+            if (left[i].pointF.y <= right[j].pointF.y) {
+                list[k] = left[i]
+//                helpingArrayCustomPointF[left[k].id].pointF.y = helpingArrayCustomPointF[left[i].id].pointF.y
+                i++
+            } else {
+                list[k] = right[j]
+//                helpingArrayCustomPointF[list[k].id].pointF.y = helpingArrayCustomPointF[right[j].id].pointF.y
+                j++
+            }
+            k++
+        }
+
+        while (i < left.size) {
+            list[k] = left[i]
+//            helpingArrayCustomPointF[list[k].id].pointF.y = helpingArrayCustomPointF[left[i].id].pointF.y
+            i++
+            k++
+        }
+
+        while (j < right.size) {
+            list[k] = right[j]
+//            helpingArrayCustomPointF[list[k].id].pointF.y = helpingArrayCustomPointF[right[j].id].pointF.y
+            j++
+            k++
+        }
+    }
 }

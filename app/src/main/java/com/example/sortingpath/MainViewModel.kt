@@ -13,11 +13,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.*
 import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortCustomV2
+import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortV1
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,9 +38,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val bubbleSort = BubbleSort() // Done
     private val selectionSort = SelectionSort() // Done
     private val insertionSort = InsertionSort() // Done
-    private val mergeSortV2 = MergeSortCustomV2() // Done
+    private val mergeSortV2 = MergeSortCustomV2() // Progress
     private val heapSort = HeapSortV1() // Progress
 
+    private val testMergeSortV1 = MergeSortV1()
 
     private var soundPool: SoundPool? = null
     private var firstSound: Int = 0
