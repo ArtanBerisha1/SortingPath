@@ -39,74 +39,96 @@ fun MainScreen() {
             .padding(2.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Surface(
+        Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
-            color = Color.LightGray,
         ) {
-            Canvas(
+            Surface(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .pointerInteropFilter { motionEvent ->
-                        mainViewModel.captureMotionPoints(motionEvent)
-                        true
-                    },
-                onDraw = {
-                    val canvasSize = this.size
-                    for (x in 0 .. canvasSize.width.toInt() step 25) {
-                        drawLine(
-                            color = Color.Gray,
-                            start = Offset(x.toFloat(), 0f),
-                            end = Offset(x.toFloat(), canvasSize.height),
-                            strokeWidth = 1.dp.toPx()
-                        )
-                    }
-                    for (y in 0 .. canvasSize.height.toInt() step 25) {
-                        drawLine(
-                            color = Color.Gray,
-                            start = Offset(0f, y.toFloat()),
-                            end = Offset(canvasSize.width, y.toFloat()),
-                            strokeWidth = 1.dp.toPx()
-                        )
-                    }
-                    mainViewModel.path.value?.let {
-                        drawPath(
-                            path = it,
-                            color = Color.Black,
-                            style = Stroke(
-                                width = 4.dp.toPx()
-                            )
-                        )
-                    }
-
-                    if (mainViewModel.drawRectangles) {
-                        for (i in 0 until  mainViewModel.listOfPoints.value.size) {
-                            drawRect(
-                                color = if (mainViewModel.listOfPoints.value[i].isMainIndex) {
-                                    mainViewModel.playSound(i)
-                                    Color.Green
-                                } else if (mainViewModel.listOfPoints.value[i].isSecondIndex) {
-                                    Color.Blue
-                                } else {
-                                    Color.White
-                                },
-                                topLeft = Offset(x = mainViewModel.listOfPoints.value[i].pointF.x, y = mainViewModel.listOfPoints.value[i].pointF.y),
-                                size = Size(mainViewModel.rectWidth, canvasSize.height - mainViewModel.listOfPoints.value[i].pointF.y),
-                                style = Fill
-                            )
-                            drawRect(
-                                color = Color.Black,
-                                topLeft = Offset(x = mainViewModel.listOfPoints.value[i].pointF.x, y = mainViewModel.listOfPoints.value[i].pointF.y),
-                                size = Size(mainViewModel.rectWidth, canvasSize.height - mainViewModel.listOfPoints.value[i].pointF.y),
-                                style = Stroke()
+                    .weight(1f)
+                    .fillMaxSize()
+                    .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 4.dp),
+                color = Color.LightGray,
+            ) {
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .pointerInteropFilter { motionEvent ->
+                            mainViewModel.captureMotionPoints(motionEvent)
+                            true
+                        },
+                    onDraw = {
+                        val canvasSize = this.size
+                        for (x in 0..canvasSize.width.toInt() step 25) {
+                            drawLine(
+                                color = Color.Gray,
+                                start = Offset(x.toFloat(), 0f),
+                                end = Offset(x.toFloat(), canvasSize.height),
+                                strokeWidth = 1.dp.toPx()
                             )
                         }
-                        mainViewModel.path.value = null
-                        mainViewModel.path.value = Path()
+                        for (y in 0..canvasSize.height.toInt() step 25) {
+                            drawLine(
+                                color = Color.Gray,
+                                start = Offset(0f, y.toFloat()),
+                                end = Offset(canvasSize.width, y.toFloat()),
+                                strokeWidth = 1.dp.toPx()
+                            )
+                        }
+                        mainViewModel.path.value?.let {
+                            drawPath(
+                                path = it,
+                                color = Color.Black,
+                                style = Stroke(
+                                    width = 4.dp.toPx()
+                                )
+                            )
+                        }
+
+                        if (mainViewModel.drawRectangles) {
+                            for (i in 0 until mainViewModel.listOfPoints.value.size) {
+                                drawRect(
+                                    color = if (mainViewModel.listOfPoints.value[i].isMainIndex) {
+                                        mainViewModel.playSound(i)
+                                        Color.Green
+                                    } else if (mainViewModel.listOfPoints.value[i].isSecondIndex) {
+                                        Color.Blue
+                                    } else {
+                                        Color.White
+                                    },
+                                    topLeft = Offset(
+                                        x = mainViewModel.listOfPoints.value[i].pointF.x,
+                                        y = mainViewModel.listOfPoints.value[i].pointF.y
+                                    ),
+                                    size = Size(
+                                        mainViewModel.rectWidth,
+                                        canvasSize.height - mainViewModel.listOfPoints.value[i].pointF.y
+                                    ),
+                                    style = Fill
+                                )
+                                drawRect(
+                                    color = Color.Black,
+                                    topLeft = Offset(
+                                        x = mainViewModel.listOfPoints.value[i].pointF.x,
+                                        y = mainViewModel.listOfPoints.value[i].pointF.y
+                                    ),
+                                    size = Size(
+                                        mainViewModel.rectWidth,
+                                        canvasSize.height - mainViewModel.listOfPoints.value[i].pointF.y
+                                    ),
+                                    style = Stroke()
+                                )
+                            }
+                            mainViewModel.path.value = null
+                            mainViewModel.path.value = Path()
+                        }
                     }
-                }
-            )
+                )
+                SeekBar(
+                    modifier = Modifier
+                        .padding(start = 30.dp, end = 30.dp)
+                )
+            }
         }
         Column(
             modifier = Modifier
