@@ -52,6 +52,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     val algorithmList = arrayListOf("Bubble Sort", "Insertion Sort", "Selection Sort", "Heap Sort", "Merge Sort")
     private var currentAlgorithm: String? = null
 
+    var drawSpeed = 1
+
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -144,16 +146,16 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun sortRect() {
         Log.d(TAG, "DefaultPreview Before: ${listOfPoints.value}")
         when (currentAlgorithm) {
-            "Bubble Sort" -> bubbleSort.sort(listOfPoints.value)
-            "Insertion Sort" -> insertionSort.sort(listOfPoints.value)
-            "Selection Sort" -> selectionSort.sort(listOfPoints.value)
+            "Bubble Sort" -> bubbleSort.sort(listOfPoints.value, drawSpeed)
+            "Insertion Sort" -> insertionSort.sort(listOfPoints.value, drawSpeed)
+            "Selection Sort" -> selectionSort.sort(listOfPoints.value, drawSpeed)
             "Merge Sort" -> CoroutineScope(Dispatchers.Default).launch {
                 do {
-                    mergeSortV2.mergeSort(listOfPoints.value)
+                    mergeSortV2.mergeSort(listOfPoints.value, drawSpeed)
                 } while (!isArraySorted(listOfPoints.value))
             }
             "Heap Sort" -> CoroutineScope(Dispatchers.Default).launch {
-                if (!isArraySorted(listOfPoints.value)) heapSort.sort(listOfPoints.value)
+                if (!isArraySorted(listOfPoints.value)) heapSort.sort(listOfPoints.value, drawSpeed)
             }
             else -> {}
         }

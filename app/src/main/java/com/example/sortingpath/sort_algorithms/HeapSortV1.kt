@@ -5,8 +5,11 @@ import kotlinx.coroutines.delay
 
 class HeapSortV1 {
 
-    suspend fun sort(arr: ArrayList<CustomPointF>) {
+    private var drawSpeed: Int = 1
+
+    suspend fun sort(arr: ArrayList<CustomPointF>, speed: Int = 1) {
         val n = arr.size
+        drawSpeed = speed
 
         // Build heap (rearrange array)
         for (i in n / 2 - 1 downTo 0) {
@@ -19,7 +22,7 @@ class HeapSortV1 {
             val temp = arr[0].pointF.y
             arr[0].pointF.y = arr[i].pointF.y
             arr[i].pointF.y = temp
-            delay(10)
+            delay(30L / drawSpeed)
             // Call heapify on the reduced heap
             heapify(arr, i, 0)
         }
@@ -46,7 +49,7 @@ class HeapSortV1 {
             arr[i].pointF.y = arr[largest].pointF.y
             arr[largest].pointF.y = swap
 
-            delay(10)
+            delay(30L / drawSpeed)
             // Recursively heapify the affected sub-tree
             heapify(arr, n, largest)
         }

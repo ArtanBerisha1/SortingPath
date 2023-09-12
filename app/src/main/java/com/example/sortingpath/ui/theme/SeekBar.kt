@@ -4,16 +4,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import kotlin.math.roundToInt
 
-@Preview
 @Composable
 fun SeekBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onValueChangeListener: (Int) -> Unit
 ) {
     var sliderPosition by remember { mutableStateOf(1f) }
     Column(
@@ -28,8 +27,11 @@ fun SeekBar(
                 inactiveTrackColor = Color.Black,
             ),
             steps = 4,
-            valueRange = 1f..6f
+            valueRange = 1f..6f,
+            onValueChangeFinished = {
+                onValueChangeListener(sliderPosition.toInt())
+            }
         )
-        Text(text = sliderPosition.roundToInt().toString())
+        Text(text = "${sliderPosition.roundToInt()}x")
     }
 }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class InsertionSort {
-    fun sort(arrayList: ArrayList<CustomPointF>) {
+    fun sort(arrayList: ArrayList<CustomPointF>, speed: Int = 1) {
         CoroutineScope(Dispatchers.Default).launch {
             val size = arrayList.size
             for (step in 1 until size) {
@@ -26,7 +26,7 @@ class InsertionSort {
                     }
                     arrayList[i + 1].pointF.y = arrayList[i].pointF.y
                     --i
-                    delay(10)
+                    delay(30L / speed)
                 }
 
                 arrayList[i + 1].pointF.y = key
@@ -36,7 +36,7 @@ class InsertionSort {
                 it.isMainIndex = true
                 delay(1)
             }
-            delay(50)
+            delay(100L / speed)
             arrayList.forEach {
                 it.isMainIndex = false
             }

@@ -7,7 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class BubbleSort {
-    fun sort(arrayList: ArrayList<CustomPointF>){
+    fun sort(arrayList: ArrayList<CustomPointF>, speed: Int = 1){
         CoroutineScope(Dispatchers.Default).launch {
             for (i in 0 until arrayList.size) {
                 arrayList[i].isMainIndex = true
@@ -24,7 +24,7 @@ class BubbleSort {
                         arrayList[j].pointF.y = arrayList[j + 1].pointF.y
                         arrayList[j + 1].pointF.y = temp
                     }
-                    delay(10)
+                    delay(30L / speed)
                 }
             }
             arrayList.forEach {
@@ -32,7 +32,7 @@ class BubbleSort {
                 it.isMainIndex = true
                 delay(1)
             }
-            delay(50)
+            delay(100L / speed)
             arrayList.forEach {
                 it.isMainIndex = false
             }

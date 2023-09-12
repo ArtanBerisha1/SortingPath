@@ -2,6 +2,7 @@ package com.example.sortingpath.ui.theme
 
 import CustomDropdownMenu
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -126,7 +127,11 @@ fun MainScreen() {
                 )
                 SeekBar(
                     modifier = Modifier
-                        .padding(start = 30.dp, end = 30.dp)
+                        .padding(start = 30.dp, end = 30.dp),
+                    onValueChangeListener = {
+                        Log.d("artan1", "MainScreen: $it")
+                        mainViewModel.drawSpeed = it
+                    }
                 )
             }
         }

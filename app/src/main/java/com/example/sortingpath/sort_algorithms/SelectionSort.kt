@@ -7,7 +7,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SelectionSort {
-    fun sort(arrayList: ArrayList<CustomPointF>) {
+    fun sort(arrayList: ArrayList<CustomPointF>, speed: Int = 1) {
         CoroutineScope(Dispatchers.Default).launch {
             val size = arrayList.size
             for (step in 0 until size - 1) {
@@ -25,7 +25,7 @@ class SelectionSort {
                     if (arrayList[i].pointF.y > arrayList[minIdx].pointF.y) {
                         minIdx = i
                     }
-                    delay(10)
+                    delay(30L / speed)
                 }
                 // put min at the correct position
                 val temp = arrayList[step].pointF.y
@@ -37,7 +37,7 @@ class SelectionSort {
                 it.isMainIndex = true
                 delay(1)
             }
-            delay(50)
+            delay(100L / speed)
             arrayList.forEach {
                 it.isMainIndex = false
             }
