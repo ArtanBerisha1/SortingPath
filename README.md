@@ -10,11 +10,11 @@ List of sorting algorithms to implement/implemented:
 - [ ] Quick Sort (TODO)
 
 ### TODOs: 
-- **Bugfix**: ~~UI bug after Process Button is clicked~~ [Done]
-- **Bugfix**: Clicking Process Button while we are sorting removes drawings
-- **Feature**: Check if the array is sorted before sorting
+- **Bugfix**: ~~UI bug after Process Button is clicked~~
+- **Bugfix**: ~~Clicking Process Button while we are sorting removes drawings~~
+- **Feature**: ~~Check if the array is sorted before sorting~~
 - **Feature**: UX -> hide Sort and Select buttons and show them after Process is clicked
-- Publish App on play store
 - **Feature**: Add flowcharts for the algorithms
 - **Bugfix**: Implement correctly Heap Sort and Merge Sort
 - **Feature**: Implement Quick Sort
+- Publish App on play store

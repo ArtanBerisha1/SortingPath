@@ -206,7 +206,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun canWeSort() = currentAlgorithm != null
+    fun isAlgorithmSelected() = currentAlgorithm != null
+
+    fun canWeSort() = !isArraySorted(listOfPoints.value)
 
     override fun onCleared() {
         super.onCleared()

@@ -168,8 +168,12 @@ fun MainScreen() {
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
-                    if (mainViewModel.canWeSort()) {
-                        mainViewModel.sortRect()
+                    if (mainViewModel.isAlgorithmSelected()) {
+                        if (mainViewModel.canWeSort()) {
+                            mainViewModel.sortRect()
+                        } else {
+                            Toast.makeText(context, "Array Already Sorted", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         Toast.makeText(context, "Choose Sorting Algorithm", Toast.LENGTH_SHORT).show()
                     }
