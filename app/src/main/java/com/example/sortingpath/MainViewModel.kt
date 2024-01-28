@@ -80,7 +80,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
 
     fun createRectanglesUnderPath() {
-        drawRectangles = !drawRectangles
+        drawRectangles = true
 
         // Create a new PathMeasure object
         val pathMeasure = PathMeasure(path.value?.asAndroidPath(), false)

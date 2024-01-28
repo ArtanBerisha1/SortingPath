@@ -10,7 +10,7 @@ List of sorting algorithms to implement/implemented:
 - [ ] Quick Sort (TODO)
 
 ### TODOs: 
-- **Bugfix**: UI bug after Process Button is clicked 
+- **Bugfix**: ~~UI bug after Process Button is clicked~~ [Done]
 - **Bugfix**: Clicking Process Button while we are sorting removes drawings
 - **Feature**: Check if the array is sorted before sorting
 - **Feature**: UX -> hide Sort and Select buttons and show them after Process is clicked

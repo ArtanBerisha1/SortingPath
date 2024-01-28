@@ -76,13 +76,15 @@ fun MainScreen() {
                             )
                         }
                         mainViewModel.path.value?.let {
-                            drawPath(
-                                path = it,
-                                color = Color.Black,
-                                style = Stroke(
-                                    width = 4.dp.toPx()
+                            if (!mainViewModel.drawRectangles) {
+                                drawPath(
+                                    path = it,
+                                    color = Color.Black,
+                                    style = Stroke(
+                                        width = 4.dp.toPx()
+                                    )
                                 )
-                            )
+                            }
                         }
 
                         if (mainViewModel.drawRectangles) {
@@ -139,6 +141,7 @@ fun MainScreen() {
                 shape = RectangleShape,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
                 onClick = {
+                    mainViewModel.drawRectangles = false
                     mainViewModel.clearDrawings()
                 }
             ) {
