@@ -1,0 +1,26 @@
+# BubbleSort
+
+Just a test diagram:
+
+```plantuml
+@startuml
+
+start
+:User Submits Order;
+if (Check Warehouse Stock?) then (In Stock)
+    if (Process Payment) then (Payment Success)
+        if (Dispatch Order) then (Dispatch Success)
+            :Show Success;
+        else (Dispatch Failed)
+            :Show Error;
+        endif
+    else (Payment Failed)
+        :Show Error;
+    endif
+else (No Stock)
+    :Show Error;
+endif
+
+stop
+@enduml
+```

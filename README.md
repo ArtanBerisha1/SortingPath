@@ -13,8 +13,7 @@ List of sorting algorithms to implement/implemented:
 - **Bugfix**: ~~UI bug after Process Button is clicked~~
 - **Bugfix**: ~~Clicking Process Button while we are sorting removes drawings~~
 - **Feature**: ~~Check if the array is sorted before sorting~~
-- **Feature**: UX -> hide Sort and Select buttons and show them after Process is clicked
-- **Feature**: Add flowcharts for the algorithms
+- **Feature**: Add flowcharts for the algorithms [In progress]
 - **Bugfix**: Implement correctly Heap Sort and Merge Sort
 - **Feature**: Implement Quick Sort
 - Publish App on play store

@@ -1,4 +1,4 @@
-package com.example.sortingpath.sort_algorithms
+package com.example.sortingpath.sort_algorithms.bubble_sort
 
 import com.example.sortingpath.CustomPointF
 import kotlinx.coroutines.CoroutineScope

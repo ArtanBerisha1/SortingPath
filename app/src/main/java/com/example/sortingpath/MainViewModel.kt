@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.asAndroidPath
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sortingpath.sort_algorithms.*
+import com.example.sortingpath.sort_algorithms.bubble_sort.BubbleSort
 import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortCustomV2
 import com.example.sortingpath.sort_algorithms.merge_sort.MergeSortV1
 import kotlinx.coroutines.CoroutineScope
@@ -40,8 +41,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val insertionSort = InsertionSort() // Done
     private val mergeSortV2 = MergeSortCustomV2() // Progress
     private val heapSort = HeapSortV1() // Progress
-
-    private val testMergeSortV1 = MergeSortV1()
 
     private var soundPool: SoundPool? = null
     private var firstSound: Int = 0

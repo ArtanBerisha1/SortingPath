@@ -1,5 +1,0 @@
-# BubbleSort
-
-````plantuml
-
-````
