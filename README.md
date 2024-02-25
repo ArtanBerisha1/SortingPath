@@ -1,5 +1,7 @@
 # Sorting Path App
-- Idea of the app is to visualize sorting algorithms, similar with implementations on web 
+- Idea of the app is to visualize sorting algorithms, similar with some implementations that I saw on web 
+
+![screen-gif](sortAppPrev.gif)
 
 List of sorting algorithms to implement/implemented:
 - [x] Bubble Sort
