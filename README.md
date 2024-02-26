@@ -13,7 +13,7 @@ but still I am not sure which one to use, since my main goal is to be able to tr
 #### How to install the app, so you can play/test it
 1. First [download a released apk](https://github.com/ArtanBerisha1/SortingPath/releases/tag/0.1)
 2. Make sure you have [Android Debug Bridge](https://source.android.com/docs/setup/build/adb) and USB debugging enabled on your phone
-3. Then using this command: `adb install "path/to/downloaded/apk_file"`, e.g: `adb install ~/Downloads/sortingPath.apk`
+3. Then install app using this command: `adb install "path/to/downloaded/apk_file"`, e.g: `adb install ~/Downloads/sortingPath.apk`
 
 
 #### List of sorting algorithms to implement/implemented:
